@@ -13,6 +13,12 @@ class Save extends Component
 
     public $image;
 
+    protected $rules =[
+        'title' => 'required|min:2|max:500',
+        //'slug' => 'max:500',
+        'text' => 'nullable'
+    ];
+
     public function render()
     {
         return view('livewire.dashboard.category.save');
@@ -20,6 +26,9 @@ class Save extends Component
 
     public function submit()
     {
+
+        $this->validate();
+
         Category::create([
             'title' => $this->title,
             'slug' => str($this->title)->slug(),

@@ -2,14 +2,22 @@
 
 
     <form wire:submit.prevent="submit()">
-    
+
         <label for="">Tìtulo</label>
-        <input type="text" wire:model="title">
-        
+        @error('title')
+            <x-jet-input-error for="title" />
+        @enderror
+        <x-jet-input type="text" wire:model="title" />
+
         <label for="">Tìtulo</label>
-        <input type="text" wire:model="text">
-        
-        <button type="submit">Enviar</button>
+
+        @error('text')
+            <x-jet-input-error for="text" />
+        @enderror
+
+        <x-jet-input type="text" wire:model="text" />
+
+        <x-jet-button type="submit">Enviar</x-jet-button>
 
     </form>
 
