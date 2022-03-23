@@ -3,6 +3,8 @@
 
     <form wire:submit.prevent="submit()">
 
+        {{ $image}}
+
         <label for="">Tìtulo</label>
         @error('title')
             <x-jet-input-error for="title" />
