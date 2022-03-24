@@ -26,8 +26,8 @@ Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'dashboa
       Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class)->name('d-category-index');
 
       //Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class);        // listado
-      Route::get('/create', App\Http\Livewire\Dashboard\Category\Save::class);   // crear
-      Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Category\Save::class);// edit
+      Route::get('/create', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-create');   // crear
+      Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-edit');// edit
   });
 
 });

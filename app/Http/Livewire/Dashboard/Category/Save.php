@@ -5,115 +5,37 @@ namespace App\Http\Livewire\Dashboard\Category;
 use App\Models\Category;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Save extends Component
 {
+    use WithFileUploads;
 
     public $title;
-
     public $text;
-
     public $image;
-
     public $category;
 
-     public function hydrate()
-     {
-        
-         Log::info("hydrate");
-        // $this->hydratedName = 'Peter';
-         
-     }
-     public function hydrateTitle()
-     {
-         Log::info("hydrateTitle");
-     }
-
-
-    public function boot()
-    {
-        Log::info("boot");
-    }
-
-    public function booted()
-    {
-        Log::info("booted");
-    }
+    protected $rules = [
+        'title' => "required|min:2|max:255",
+        'text' => "nullable",
+        'image' => 'nullable|image|max:1024'
+    ];
 
     public function mount($id = null)
     {
-        //echo "mount";
-        //$this->title = "John";
-        Log::info("mount");
-        $this->init($id);
-    }
-
-    public function dehydrate()
-    {
-       // echo "dehydrate";
-      
-       Log::info("dehydrate");
-    }
-
-    public function dehydrateTitle($value)
-    {
-        //echo "dehydrateTitle $value";
-        Log::info("dehydrateTitle $value");
-    }
-
-    public function updating($name, $value)
-    {
-       // $this->title = 'Peter';
-       $this->image++;
-        Log::info("updating $name - $value");
-        //$this->title =  "updating".time();
-        //echo "$name $value";
-        //$this->title = "ssss";
-    }
-    public function updated($name, $value)
-    {
-       // $this->title = 'Peter';
         
-        Log::info("updated $name - $value");
-        //$this->title =  "updating".time();
-        //echo "$name $value";
-        //$this->title = "ssss";
-    }
-    public function updatingTitle($value)
-    {
-        Log::info("updatingTitle $value");
-        //$this->title =  "updating".time();
-        //echo "$name $value";
-        //$this->title = "ssss";
-    }
 
-    private function init($id)
-    {
-        $category = null;
-        if ($id) {
-            $category = Category::findOrFail($id);
-        }
-
-        $this->category = $category;
-
-        //dd( $this->category);
-
-        if ($this->category) {
+        if ($id != null) {
+            $this->category = Category::findOrFail($id);
             $this->title = $this->category->title;
-            $this->text = $this->category->body;
-            //$this->slug = $this->category->slug;
+            $this->text = $this->category->text;
         }
     }
-
-    protected $rules = [
-        'title' => 'required|min:2|max:500',
-        //'slug' => 'max:500',
-        'text' => 'nullable'
-    ];
 
     public function render()
     {
-        Log::info("render");
+        //Log::info("render");
         return view('livewire.dashboard.category.save');
     }
 
@@ -122,18 +44,91 @@ class Save extends Component
 
         $this->validate();
 
-        if ($this->category) {
-            $this->category->update(
+        if ($this->category)
+            $this->category->update([
+                'title' => $this->title,
+                'text' => $this->text,
+            ]);
+        else
+        $this->category = Category::create(
                 [
                     'title' => $this->title,
-                    'body' => $this->text,
+                    'slug' => str($this->title)->slug(),
+                    'text' => $this->text,
                 ]
             );
-        } else
-            Category::create([
-                'title' => $this->title,
-                'slug' => str($this->title)->slug(),
-                'body' => $this->text,
-            ]);
+
+            if ($this->image) {
+                // imagen cargada
+                $imageName = str($this->title)->slug() . '.' . $this->image->getClientOriginalExtension();
+                $this->image->storeAs('images', $imageName, 'public_upload');
+                $this->category->update(
+                    [
+                        'image' => $imageName
+                    ]
+                );
+            }
+
+            $this->emit('saved');
     }
+
+    /*
+    public function boot()
+    {
+        Log::info("boot");
+    }
+ 
+    public function booted()
+    {
+        Log::info("booted");
+    }
+ 
+    public function mount()
+    {
+        Log::info("mount");
+    }
+ 
+    public function hydrateTitle($value)
+    {
+        Log::info("hydrateTitle $value");
+    }
+ 
+    public function dehydrateFoo($value)
+    {
+        Log::info("dehydrateFoo $value");
+    }
+ 
+    public function hydrate()
+    {
+       
+        Log::info("hydrate");
+    }
+ 
+    public function dehydrate()
+    {
+        Log::info("dehydrate");
+    }
+ 
+    public function updating($name, $value)
+    {
+        $this->title = "Pepe";
+        Log::info("updating $name $value");
+    }
+ 
+    public function updated($name, $value)
+    {
+        Log::info("updated $name $value");
+    }
+ 
+    public function updatingTitle($value)
+    {
+        Log::info("updatingTitle $value");
+    }
+ 
+    public function updatedTitle($value)
+    {
+         Log::info("updatedTitle $value");
+    }
+ 
+  */
 }
