@@ -1,10 +1,8 @@
 <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Create Category') }}
-    </h2>
+    {{ __('Create Category') }}s
 </x-slot>
 
-<div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+<div class="container">
     <x-jet-action-message class="mr-3" on="delete">
         {{ __('Created.') }}
     </x-jet-action-message>
@@ -19,28 +17,37 @@
             {{ __('...') }}
         </x-slot>
         <x-slot name="form">
-            <label for="">Tìtulo</label>
-            @error('title')
-                <x-jet-input-error for="title" />
-            @enderror
-            <x-jet-input type="text" wire:model="title" />
+            <div class="col-span-6 sm:col-span-4">
+                <x-jet-label for="">Tìtulo</x-jet-label>
+                @error('title')
+                    <x-jet-input-error for="title" />
+                @enderror
+                <x-jet-input class="block w-full" type="text" wire:model="title" />
+            </div>
 
-            <label for="">Tìtulo</label>
+            <div class="col-span-6 sm:col-span-4">
+                <x-jet-label for="">Text</x-jet-label>
+                @error('text')
+                    <x-jet-input-error for="text" />
+                @enderror
+                <x-jet-input class="block w-full" type="text" wire:model="text" />
+            </div>
 
-            @error('text')
-                <x-jet-input-error for="text" />
-            @enderror
+            <div class="col-span-3 sm:col-span-3">
+                <x-jet-label for="image" value="{{ __('Image') }}" />
+                <x-jet-input class="block w-full"  type="file" wire:model="image" />
+                @if ($category && $category->image)
+                    <img class="w-40 mt-3" src="{{ $category->getImageUrl() }}">
+                @endif
+            </div>
 
-            <x-jet-input type="text" wire:model="text" />
 
-            <x-jet-label for="image" value="{{ __('Image') }}" />
-            <input type="file" wire:model="image">
+            @slot('actions')
+                <x-jet-button type="submit">Enviar</x-jet-button>
+            @endslot
 
-            @if ($category && $category->image)
-                <img class="w-40 mt-3" src="{{ $category->getImageUrl() }}">
-            @endif
 
-            <x-jet-button type="submit">Enviar</x-jet-button>
+
         </x-slot>
     </x-jet-form-section>
 </div>
