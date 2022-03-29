@@ -4,7 +4,9 @@
 
 <div class="container">
     <x-jet-action-message class="mr-3" on="delete">
-        {{ __('Created.') }}
+        <div class="box-action-message">
+            {{ __('Created.') }}
+        </div>
     </x-jet-action-message>
 
     <x-jet-form-section submit="submit">
