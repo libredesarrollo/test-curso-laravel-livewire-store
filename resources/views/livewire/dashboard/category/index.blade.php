@@ -1,6 +1,5 @@
 <x-card>
     <div>
-
         @slot('title')
             Listado
         @endslot
@@ -10,6 +9,8 @@
                 {{ __('Delete.') }}
             </div>
         </x-jet-action-message>
+
+        <a href="{{ route('d-category-create') }}" class="btn-secondary mb-3">Crear</a>
 
         <table class="table  w-full border">
             <thead>

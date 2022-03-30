@@ -31,3 +31,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'dashboa
   });
 
 });
+
+Route::group(['prefix' => 'contact'], function () {
+    Route::get('/', App\Http\Livewire\Contact\General::class)->name('contact');
+});
+
+
