@@ -15,11 +15,8 @@ return new class extends Migration
     {
         Schema::create('contact_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_general_id')->constrained()
-            ->onDelete('cascade');
-            $table->enum('choices', ['movies', 'anime', 'games','other']);
-            $table->string('other', 100)->nullable();
-            $table->timestamps();
+            $table->string('extra', 500);
+            $table->foreignId('contact_general_id')->onDelete('cascade');
         });
     }
 

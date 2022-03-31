@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('contact_generals', function (Blueprint $table) {
             $table->id();
             $table->string('subject', 255);
-            $table->enum('type', ['company', 'person']);
             $table->text('message');
+            $table->enum('type', ['company', 'person']);
             $table->timestamps();
         });
     }

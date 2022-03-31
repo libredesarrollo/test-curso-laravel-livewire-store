@@ -13,6 +13,13 @@ class General extends Component
     public $type;
     public $message;
 
+    protected $rules = [
+        'subject' => "required|min:2|max:255",
+        'type' => "required",
+        'message' => "required|min:2",
+    ];
+
+
     public function render()
     {
         dd(ContactGeneral::find(1)->person);
@@ -22,11 +29,14 @@ class General extends Component
 
     public function submit()
     {
-        // ContactGeneral::create([
-        //     'subject' => $this->subject,
-        //     'type' => $this->type,
-        //     'message' => $this->message
-        // ]);
+
+        $this->validate();
+
+        return ContactGeneral::create([
+            'subject' => $this->subject,
+            'type' => $this->type,
+            'message' => $this->message
+        ]);
 
         ContactPerson::create([
             'name' => "Pepe",

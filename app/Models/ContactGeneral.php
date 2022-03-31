@@ -9,9 +9,12 @@ class ContactGeneral extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['subject','type','message'];
+    protected $fillable = ['subject','message','type'];
 
     public function person(){
         return $this->hasOne(ContactPerson::class);
+    }
+    public function company(){
+        return $this->hasOne(ContactCompany::class);
     }
 }

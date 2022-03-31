@@ -11,10 +11,9 @@ class ContactPerson extends Model
 
     protected $table = "contact_persons";
 
-    protected $fillable = ['name', 'contact_general_id', 'surname', 'extra', 'email'];
+    protected $fillable = ['name', 'surname', 'contact_general_id','choices','other'];
 
-    public function general()
-    {
-        return $this->belongsTo(ContactGeneral::class, 'contact_general_id');
+    public function general(){
+        return $this->belongsTo(ContactGeneral::class);
     }
 }

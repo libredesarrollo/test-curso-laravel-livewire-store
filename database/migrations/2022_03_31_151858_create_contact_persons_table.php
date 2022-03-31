@@ -15,13 +15,11 @@ return new class extends Migration
     {
         Schema::create('contact_persons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contact_general_id')->constrained()
-            ->onDelete('cascade');
             $table->string('name', 255);
-            $table->string('surname', 255);
-            $table->string('email', 255);
-            $table->text('extra')->nullable();
-            $table->timestamps();
+            $table->string('surname', 80);
+            $table->foreignId('contact_general_id')->onDelete('cascade');
+            $table->enum('choices', ['adverd', 'post','course','movie','other']);
+            $table->string('other', 255)->nullable();
         });
     }
 
