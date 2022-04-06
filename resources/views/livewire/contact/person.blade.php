@@ -25,6 +25,7 @@
         <x-jet-input-error for="other" />
         <textarea wire:model="other"></textarea>
 
+        <x-jet-secondary-button wire:click="$emit('stepEvent',1)">Atrás</x-jet-secondary-button>
         <x-jet-button type="submit">Enviar</x-jet-button>
     </form>
 

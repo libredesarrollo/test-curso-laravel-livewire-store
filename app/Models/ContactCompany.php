@@ -9,6 +9,8 @@ class ContactCompany extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = ['name', 'identification','email','extra', 'contact_general_id','choices'];
 
     public function general(){

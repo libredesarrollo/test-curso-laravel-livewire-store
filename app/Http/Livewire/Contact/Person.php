@@ -11,6 +11,7 @@ class Person extends Component
     public $surname;
     public $choices;
     public $other;
+    public $parentId;
 
     protected $rules = [
         'name' => 'required|min:2|max:255',
@@ -19,23 +20,35 @@ class Person extends Component
         'other' => 'nullable'
     ];
 
+    protected $listeners = ['parentId'];
+
+    public function mount()
+    {
+        //$this->name = time();
+    }
+
     public function render()
     {
         return view('livewire.contact.person');
     }
 
+    public function parentId($parentId)
+    {
+        $this->parentId = $parentId;
+    }
+
     public function submit()
     {
-        $this->emit('stepEvent',3);
-        return;
         $this->validate();
-
+        
         ContactPerson::create([
             'name' => $this->name,
             'surname' => $this->surname,
             'choices' => $this->choices,
-            'contact_general_id' => 1,
+            'contact_general_id' => $this->parentId,
             'other' => $this->other
         ]);
+        
+        $this->emit('stepEvent', 3);
     }
 }

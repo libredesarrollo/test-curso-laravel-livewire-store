@@ -12,9 +12,10 @@ class General extends Component
     public $subject;
     public $type;
     public $message;
+    public $pk;
 
     // form
-    public $step=1;
+    public $step = 1;
 
     protected $rules = [
         'subject' => "required|min:2|max:255",
@@ -31,35 +32,38 @@ class General extends Component
 
     public function submit()
     {
-
-        if($this->type == "company")
-            $this->step = 2;
-        elseif($this->type == "person")
-            $this->step = 2.5;
-
-        return;
-
+        
         $this->validate();
-
-        return ContactGeneral::create([
+        
+        $this->pk = ContactGeneral::create([
             'subject' => $this->subject,
             'type' => $this->type,
             'message' => $this->message
-        ]);
+        ])->id;
+        
+        // ContactPerson::create([
+        //     'name' => "Pepe",
+        //     'contact_general_id' => 1,
+        //     'surname' => "Pepe",
+        //     'extra' => "Pepe",
+        //     'email' => "Pepe",
+        // ]);
 
-        ContactPerson::create([
-            'name' => "Pepe",
-            'contact_general_id' => 1,
-            'surname' => "Pepe",
-            'extra' => "Pepe",
-            'email' => "Pepe",
-        ]);
+        $this->stepEvent(2);
     }
 
     //*************** EVENTOS */
 
-    public function stepEvent($step=5)
+    public function stepEvent($step)
     {
-        $this->step = $step;
+        if ($step == 2) {
+            if ($this->type == "company")
+                $this->step = 2;
+            elseif ($this->type == "person")
+                $this->step = 2.5;
+        } else
+            $this->step = $step;
+
+        return $this->emit("parentId", $this->pk);
     }
 }

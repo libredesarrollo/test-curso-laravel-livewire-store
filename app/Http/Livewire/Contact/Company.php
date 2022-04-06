@@ -14,6 +14,10 @@ class Company extends Component
     public $extra;
     public $choices;
 
+    public $parentId;
+
+    
+
     protected $rules = [
         'name' => 'required|min:2|max:255',
         'identification' => 'required|min:2|max:50',
@@ -21,6 +25,8 @@ class Company extends Component
         'extra' => 'required|min:2|max:255',
         'choices' => 'required'
     ];
+
+    protected $listeners = ['parentId'];
 
     public function render()
     {
@@ -31,17 +37,22 @@ class Company extends Component
 
     public function submit()
     {
-        $this->emit('stepEvent',3);
-        return;
         $this->validate();
-
+        
         ContactCompany::create([
             'name' => $this->name,
             'identification' => $this->identification,
             'extra' => $this->extra,
             'email' => $this->email,
             'choices' => $this->choices,
-            'contact_general_id' => 1,
+            'contact_general_id' => $this->parentId,
         ]);
+        
+        $this->emit('stepEvent',3);
+    }
+
+    public function parentId($parentId)
+    {
+        $this->parentId = $parentId;
     }
 }
