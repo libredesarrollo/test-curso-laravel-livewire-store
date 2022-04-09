@@ -46,6 +46,10 @@
                                 <x-jet-dropdown-link href="{{ route('d-category-index') }}">
                                     {{ __('Category') }}
                                 </x-jet-dropdown-link>
+                                <!-- Team Settings -->
+                                <x-jet-dropdown-link href="{{ route('d-post-index') }}">
+                                    {{ __('Post') }}
+                                </x-jet-dropdown-link>
 
                             </div>
                         </x-slot>

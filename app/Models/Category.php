@@ -16,6 +16,6 @@ class Category extends Model
     {
         if ($this->image == null)
             return "broken-img.png";
-        return URL::asset("images/" . $this->image);
+        return URL::asset("images/category" . $this->image);
     }
 }
