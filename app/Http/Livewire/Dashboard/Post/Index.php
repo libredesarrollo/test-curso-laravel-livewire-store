@@ -2,15 +2,19 @@
 
 namespace App\Http\Livewire\Dashboard\Post;
 
+use App\Http\Livewire\Dashboard\OrderTrait;
 use App\Models\Category;
 use App\Models\Post;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+
 class Index extends Component
 {
 
     use WithPagination;
+
+    use OrderTrait;
 
     protected $queryString = ['search', 'category_id', 'posted', 'type'];
 
@@ -29,11 +33,19 @@ class Index extends Component
     public $posted;
     public $category_id;
 
-
+    public $columns = [
+        'id' => 'Id',
+        'category_id' => 'Categoría',
+        'title' => 'Título',
+        'date' => 'Fecha',
+        'description' => 'Descripción',
+        'posted' => 'Posteado',
+        'type' => 'Típo'
+    ];
 
     public function render()
     {
-        $posts =  Post::where("id", ">=", 1);
+        $posts =  Post::orderBy($this->sortColumn, $this->sortDirection);
 
         //dd(Category::inRandomOrder()->first()->title);
 
@@ -45,8 +57,6 @@ class Index extends Component
                         ->orWhere('description', 'like', '%' . $this->search . '%');
                 });
         }
-
-       
 
         if ($this->from && $this->to){
             $posts->whereBetween('date', [date($this->from), date($this->to)])->get();

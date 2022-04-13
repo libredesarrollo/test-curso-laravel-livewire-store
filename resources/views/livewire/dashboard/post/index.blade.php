@@ -13,10 +13,10 @@
         <a href="{{ route('d-post-create') }}" class="btn-secondary mb-3">Crear</a>
 
         <div class="grid grid-cols-2 gap-2 mb-3">
-            <x-jet-input class="block w-full" type="text"  wire:model="search" placeholder="Buscar por título o id" />
+            <x-jet-input class="block w-full" type="text" wire:model="search" placeholder="Buscar por título o id" />
             <div class="grid grid-cols-2 gap-2">
-                <x-jet-input class="block w-full" type="date"  wire:model="from" placeholder="Fecha inicio" />
-                <x-jet-input class="block w-full" type="date"  wire:model="to" placeholder="Fecha Fin" />
+                <x-jet-input class="block w-full" type="date" wire:model="from" placeholder="Fecha inicio" />
+                <x-jet-input class="block w-full" type="date" wire:model="to" placeholder="Fecha Fin" />
             </div>
         </div>
 
@@ -51,30 +51,22 @@
         <table class="table  w-full border">
             <thead>
                 <tr class="text-left bg-gray-100 bold">
-                    <th class="border-b p-2">
-                        Id
-                    </th>
-                    <th class="border-b p-2 max-w-xs">
-                        Título
-                    </th>
-                    <th class="border-b p-2">
-                        Fecha
-                    </th>
-                    <th class="border-b p-2">
-                        Description
-                    </th>
-                    <th class="border-b p-2">
-                        Tipo
-                    </th>
-                    <th class="border-b p-2">
-                        Posted
-                    </th>
-                    <th class="border-b p-2">
-                        Categoría
-                    </th>
-                    <th class="border-b p-2">
-                        Acciones
-                    </th>
+
+                    @foreach ($columns as $key => $c)
+                        <th class="p-3 border" wire:click="sort('{{ $key }}')">
+                            <button>
+                                {{ $c }}
+                                @if ($sortColumn == $key)
+                                    @if ($sortDirection == 'asc')
+                                        &uarr;
+                                    @else
+                                        &darr;
+                                    @endif
+                                @endif
+                            </button>
+                        </th>
+                    @endforeach
+                    <th class="border">Acciones</th>
                 </tr>
             </thead>
             <tbody>
