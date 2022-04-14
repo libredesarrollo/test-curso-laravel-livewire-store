@@ -133,4 +133,29 @@
         </x-jet-confirmation-modal>
 
     </div>
+    <script>
+
+        window.onload = function() {
+            Livewire.hook("element.updated", (el, component) => {
+                // console.log("aaa"+el)
+            })
+            Livewire.hook("element.updating", (fromEl, toEl, component) => {
+                //  console.log(fromEl)
+            })
+            Livewire.hook("element.removed", (fromEl, toEl, component) => {
+                //console.log("element.removed")
+                console.log(fromEl)
+            })
+            Livewire.hook("message.sent", (message, component) => {
+                //console.log("message.sent")
+               // console.log(message.updateQueue[0].payload.method)
+            })
+            Livewire.hook("message.processed", (message, component) => {
+               // console.log("message.processed")
+                //console.log(message)
+            })
+        }
+
+        // $wire.content = 'bar'
+    </script>
 </x-card>

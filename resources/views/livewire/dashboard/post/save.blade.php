@@ -35,6 +35,10 @@
 
             </div>
 
+            <div wire:ignore class="col-span-6 sm:col-span-4">
+                <div id="ckcontent">{!! $content !!}</div>
+            </div>
+
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="">Contenido</x-jet-label>
                 @error('content')
@@ -105,4 +109,23 @@
 
         </x-slot>
     </x-jet-form-section>
+
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/index.js') }}"></script>
+    <script>
+        document.addEventListener('livewire:load', function() {
+                    console.log(@this.content)
+
+                    var editor = ClassicEditor.create(document.querySelector("#ckcontent"))
+                        .then(editor => {
+                            editor.model.document.on('change:data', (evt, data) => {
+                                console.log(editor.getData());
+                                @this.content = editor.getData()
+                            });
+                        })
+
+                })
+
+                // $wire.content = 'bar'
+    </script>
 </div>
