@@ -44,7 +44,7 @@
                 @error('content')
                     <x-jet-input-error for="content" />
                 @enderror
-                <textarea class="block w-full" type="text" wire:model="content"></textarea>
+                <textarea id="content" class="block w-full" type="text" wire:model="content"></textarea>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -114,18 +114,29 @@
     <script src="{{ asset('js/ckeditor/index.js') }}"></script>
     <script>
         document.addEventListener('livewire:load', function() {
-                    console.log(@this.content)
+            // console.log(@this.content)
 
-                    var editor = ClassicEditor.create(document.querySelector("#ckcontent"))
-                        .then(editor => {
-                            editor.model.document.on('change:data', (evt, data) => {
-                                console.log(editor.getData());
-                                @this.content = editor.getData()
-                            });
-                        })
-
+            var ckeditor = null
+            var editor = ClassicEditor.create(document.querySelector("#ckcontent"))
+                .then(editor => {
+                    ckeditor = editor
+                    editor.model.document.on('change:data', (evt, data) => {
+                        console.log(editor.getData());
+                        @this.content = editor.getData()
+                    });
                 })
+            console.log(editor)
+            Livewire.hook('message.processed', (message, component) => {
+                //console.log('message.processed');
+                //console.log(message.updateQueue[0].name); // logs old data to console
+                console.log(ckeditor)
+                if (message.updateQueue[0].name == "content")
+                    ckeditor.setData(@this.content)
+            });
+        })
 
-                // $wire.content = 'bar'
+
+
+        // $wire.content = 'bar'
     </script>
 </div>

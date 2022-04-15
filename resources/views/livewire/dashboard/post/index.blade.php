@@ -136,6 +136,7 @@
     <script>
 
         window.onload = function() {
+    
             Livewire.hook("element.updated", (el, component) => {
                 // console.log("aaa"+el)
             })

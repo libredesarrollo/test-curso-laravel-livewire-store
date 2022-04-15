@@ -1,7 +1,7 @@
 <x-slot name="header">
     {{ __('Create Category') }}s
 </x-slot>
-
+{{ $category }}
 <div class="container">
     <x-jet-action-message class="mr-3" on="delete">
         <div class="box-action-message">

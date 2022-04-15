@@ -10,6 +10,8 @@
             </div>
         </x-jet-action-message>
 
+        <p>Categoría a eliminar: {{ $this->category }}</p>
+
         <a href="{{ route('d-category-create') }}" class="btn-secondary mb-3">Crear</a>
 
         <table class="table  w-full border">
@@ -52,7 +54,7 @@
             </x-slot>
 
             <x-slot name="content">
-                {{ __('Are you sure you want to delete this category?') }}
+                {{ __('Are you sure you want to delete <b>'. $this->category .'</b> category?') }}
             </x-slot>
 
             <x-slot name="footer">

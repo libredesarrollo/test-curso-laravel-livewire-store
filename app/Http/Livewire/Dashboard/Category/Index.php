@@ -14,11 +14,20 @@ class Index extends Component
     public $confirmingDeleteCategory;
     public $categoryDelete;
 
+  //public function getPostProperty()
+    public function getCategoryProperty()
+    {
+        if ($this->categoryDelete)
+            return Category::find($this->categoryDelete->id);
+        return "Sin categoría a eliminar";
+    }
+
     public function render()
     {
+        //dd($this->category);
         //$this->confirmingDeleteCategory = true;
         $categories = Category::paginate(10);
-        return view('livewire.dashboard.category.index',compact('categories'));
+        return view('livewire.dashboard.category.index', compact('categories'));
     }
 
     public function delete(/*Category $category*/)
@@ -33,5 +42,4 @@ class Index extends Component
         $this->confirmingDeleteCategory = true;
         $this->categoryDelete = $category;
     }
-
 }
