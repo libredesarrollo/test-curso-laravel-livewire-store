@@ -14,6 +14,10 @@ class Post extends Model
 
     public $timestamps=false;
 
+    protected $casts = [
+        'date'  => 'datetime',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -22,8 +26,8 @@ class Post extends Model
     public function getImageUrl()
     {
         if ($this->image == null)
-            return "broken-img.png";
-        return URL::asset("images/post" . $this->image);
+            return URL::asset("images/image.jpg" );
+        return URL::asset("images/post/" . $this->image);
     }
 
 }
