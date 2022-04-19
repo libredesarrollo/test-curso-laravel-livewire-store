@@ -22,21 +22,20 @@ Route::group(['middleware' => ['auth:sanctum', 'verified'], 'prefix' => 'dashboa
         return view('dashboard');
     })->name('dashboard');
 
-  Route::group(['prefix' => 'category'], function () {
-      Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class)->name('d-category-index');
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class)->name('d-category-index');
 
-      //Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class);        // listado
-      Route::get('/create', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-create');   // crear
-      Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-edit');// edit
-  });
-  Route::group(['prefix' => 'post'], function () {
-      Route::get('/', App\Http\Livewire\Dashboard\Post\Index::class)->name('d-post-index');
+        //Route::get('/', App\Http\Livewire\Dashboard\Category\Index::class);        // listado
+        Route::get('/create', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-create');   // crear
+        Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Category\Save::class)->name('d-category-edit'); // edit
+    });
+    Route::group(['prefix' => 'post'], function () {
+        Route::get('/', App\Http\Livewire\Dashboard\Post\Index::class)->name('d-post-index');
 
-      //Route::get('/', App\Http\Livewire\Dashboard\Post\Index::class);        // listado
-      Route::get('/create', App\Http\Livewire\Dashboard\Post\Save::class)->name('d-post-create');   // crear
-      Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Post\Save::class)->name('d-post-edit');// edit
-  });
-
+        //Route::get('/', App\Http\Livewire\Dashboard\Post\Index::class);        // listado
+        Route::get('/create', App\Http\Livewire\Dashboard\Post\Save::class)->name('d-post-create');   // crear
+        Route::get('/edit/{id}', App\Http\Livewire\Dashboard\Post\Save::class)->name('d-post-edit'); // edit
+    });
 });
 
 Route::group(['prefix' => 'contact'], function () {
@@ -44,6 +43,8 @@ Route::group(['prefix' => 'contact'], function () {
 });
 Route::group(['prefix' => 'blog'], function () {
     Route::get('/', App\Http\Livewire\Blog\Index::class)->name('web-index');
+    Route::get('/{slug}', App\Http\Livewire\Blog\Show::class)->name('web-show');
 });
-
-
+Route::group(['prefix' => 'shop'], function () {
+    Route::get('/cart-list', App\Http\Livewire\Shop\Cart::class)->name('shop-cart-list');
+});

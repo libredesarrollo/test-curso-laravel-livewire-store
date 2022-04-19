@@ -25,6 +25,12 @@ class General extends Component
 
     protected $listeners = ['stepEvent' => 'stepEvent'];
 
+    public function mount($subject = "#1 ")
+    {
+        $this->subject = $subject;
+    }
+
+
     public function render()
     {
         return view('livewire.contact.general')->layout('layouts.contact');
@@ -32,15 +38,15 @@ class General extends Component
 
     public function submit()
     {
-        
+
         $this->validate();
-        
+
         $this->pk = ContactGeneral::create([
             'subject' => $this->subject,
             'type' => $this->type,
             'message' => $this->message
         ])->id;
-        
+
         // ContactPerson::create([
         //     'name' => "Pepe",
         //     'contact_general_id' => 1,
