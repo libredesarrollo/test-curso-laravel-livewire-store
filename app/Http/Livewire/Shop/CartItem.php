@@ -2,40 +2,65 @@
 
 namespace App\Http\Livewire\Shop;
 
+use Illuminate\Support\Arr;
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class CartItem extends Component
 {
-
-    public $post;
+    //gestion
     public $count;
 
-    protected $listeners = ['add'];
+    // referencia
+    public $item;
 
-    public function mount()
+    protected $listeners = ['addItemToCart' => 'add'];
+
+    public function mount($postId)
     {
-        # code...
+        $session = new Session();
+        $cart = $session->get('cart', []);
+        if (Arr::exists($cart, $postId)){
+            $this->item = $cart[$postId];
+            $this->count = $this->item[1];
+        }
+
     }
 
     public function add($post, $count = 1)
     {
-        dd("aaaa");
-        if (!session()->has('cart')) {
-            session(['cart' => []]);
+        $session = new Session();
+        $cart = $session->get('cart', []);
+
+        // eliminar
+        if ($count <= 0) {
+            if (Arr::exists($cart, $post['id'])) {
+                unset($cart[$post['id']]);
+                unset($this->item);
+                $session->set('cart', $cart);
+            }
+            return;
         }
 
-        $cart = session("cart");
+        // agregar
+        if (Arr::exists($cart, $post['id'])) {
+            $cart[$post['id']][1] = $count;
+        } else {
+            $cart[$post["id"]] = [$post, $count];
+        }
 
+        $this->item = $cart[$post['id']];
+        $this->count = $this->item[1];
+        $session->set('cart', $cart);
+    }
 
-
-        $cart[$post->id] = [$post, $count];
-
-        session("cart",$cart);
+    public function update()
+    {
+        $this->add($this->item[0], $this->count);
     }
 
     public function render()
     {
-        //dd(session("cart"));
         return view('livewire.shop.cart-item');
     }
 }

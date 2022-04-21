@@ -1,19 +1,9 @@
 <div>
 
-    @livewire('shop.cart-item')
+    Carrito de compras
 
+    @foreach ($cart as $c)
+        @livewire('shop.cart-item', ['postId' => $c[0]['id']])
+    @endforeach
 
-    <button wire:click="test">test</button>
-
-    @if (session('cart'))
-
-        @foreach (session('cart') as $c)
-            <div class="box mb-2">
-
-
-
-                <p><input type="number" class="w-20"> {{ $c }}</p>
-            </div>
-        @endforeach
-    @endif
 </div>

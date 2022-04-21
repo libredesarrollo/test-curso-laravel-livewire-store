@@ -12,10 +12,10 @@
             <span class="bg-purple-600 rounded py-1 px-2 text-white">{{ $post->category->title }}</span>
         </p>
 
-        @if ($post->type == "post")
-            @livewire('shop.cart')
+        @if ($post->type == 'post')
+            @livewire('shop.cart',['type'=>'add', 'post' => $post])
         @endif
-        
+
 
         <div class="mt-5">{!! $post->content !!}</div>
 

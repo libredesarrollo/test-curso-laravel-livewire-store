@@ -3,37 +3,31 @@
 namespace App\Http\Livewire\Shop;
 
 use App\Models\Post;
-use Illuminate\Contracts\Session\Session;
+
 use Livewire\Component;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Cart extends Component
 {
     public $types = ['list', 'add'];
 
-    public $type;
-    public $pk;
+    public $cart = 'list';
 
-    public function mount($type = "list", $pk = 0)
+    public $type = 'list';
+    public $post;
+
+    public function mount($post, $type = "list")
     {
-        $this->initSessionCart();
+        $session = new Session();
+        $this->cart = $session->get('cart', []);
+
+   
+        foreach ($this->cart as $key => $c) {
+            # code...
+          //  dd($c[0]);
+        }
+        $this->post = $post;
         $this->type = $type;
-        $this->pk = $pk;
-    }
-
-    private function initSessionCart()
-    {
-       // dd($this->emit("addItemToCart", Post::find(1)));
-        $this->emit("add", Post::find(1),1);
-        $this->emit("add", Post::find(2));
-        $this->emit("add", Post::find(3));
-
-        //     if (!session()->has('cart')) {
-        //         session(['cart' => []]);
-
-
-        //         // dd(session('cart'));
-        //         session(['cart' => [$post1, $post2, $post3]]);
-        //     }
     }
 
     public function test()
@@ -43,8 +37,9 @@ class Cart extends Component
 
     public function render()
     {
-        // if(type)
-        
-        return view('livewire.shop.cart')->layout("layouts.web");
+        if ($this->type == "list")
+            return view('livewire.shop.cart')->layout("layouts.web");
+
+        return view('livewire.shop.cart-add')->layout("layouts.web");
     }
 }
