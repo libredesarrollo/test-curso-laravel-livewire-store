@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Shop;
 
+use App\Models\ShoppingCart;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -20,11 +21,10 @@ class CartItem extends Component
     {
         $session = new Session();
         $cart = $session->get('cart', []);
-        if (Arr::exists($cart, $postId)){
+        if (Arr::exists($cart, $postId)) {
             $this->item = $cart[$postId];
             $this->count = $this->item[1];
         }
-
     }
 
     public function add($post, $count = 1)
@@ -38,6 +38,7 @@ class CartItem extends Component
                 unset($cart[$post['id']]);
                 unset($this->item);
                 $session->set('cart', $cart);
+                $this->saveDB($cart);
             }
             return;
         }
@@ -52,6 +53,44 @@ class CartItem extends Component
         $this->item = $cart[$post['id']];
         $this->count = $this->item[1];
         $session->set('cart', $cart);
+        //dd($session->get('cart', []));
+
+        $this->saveDB($cart);
+    }
+
+    private function saveDB($cart)
+    {
+        // actualizar/agregar existentes
+
+        $control = time();
+
+        if (auth()->check()) {
+            foreach ($cart as $c) {
+                ShoppingCart::updateOrCreate(
+                    [
+                        'post_id' => $c[0]['id'],
+                        'user_id' => auth()->id()
+                    ],
+                    [
+                        'post_id' => $c[0]['id'],
+                        'count' => $c[1],
+                        'user_id' => auth()->id(),
+                        'control' => $control
+                    ]
+                );
+            }
+
+            // borrar anteriores
+            ShoppingCart::whereNot('control', $control)->where('user_id',auth()->id())->delete();
+
+            //dd(auth()->user()->cartItems());
+
+            //auth()->user()->cartItems()->syncWithPivotValues(1, ['s' => 1]);
+        }
+
+       
+
+
     }
 
     public function update()
