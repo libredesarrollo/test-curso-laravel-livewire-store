@@ -39,19 +39,23 @@ class CartItem extends Component
                 unset($this->item);
                 $session->set('cart', $cart);
                 $this->saveDB($cart);
+                $this->emit("itemDelete");
             }
             return;
         }
 
         // agregar
         if (Arr::exists($cart, $post['id'])) {
+            $this->emit("itemChange", $post);
             $cart[$post['id']][1] = $count;
         } else {
+            $this->emit("itemAdd", $post);
             $cart[$post["id"]] = [$post, $count];
         }
 
         $this->item = $cart[$post['id']];
         $this->count = $this->item[1];
+
         $session->set('cart', $cart);
         //dd($session->get('cart', []));
 
@@ -81,16 +85,12 @@ class CartItem extends Component
             }
 
             // borrar anteriores
-            ShoppingCart::whereNot('control', $control)->where('user_id',auth()->id())->delete();
+            ShoppingCart::whereNot('control', $control)->where('user_id', auth()->id())->delete();
 
             //dd(auth()->user()->cartItems());
 
             //auth()->user()->cartItems()->syncWithPivotValues(1, ['s' => 1]);
         }
-
-       
-
-
     }
 
     public function update()
