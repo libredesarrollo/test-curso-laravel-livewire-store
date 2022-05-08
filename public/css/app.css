@@ -986,23 +986,8 @@ select {
 .right-0 {
   right: 0px;
 }
-.top-0 {
-  top: 0px;
-}
 .bottom-0 {
   bottom: 0px;
-}
-.top-5 {
-  top: 1.25rem;
-}
-.-top-4 {
-  top: -1rem;
-}
-.-top-3 {
-  top: -0.75rem;
-}
-.-right-2 {
-  right: -0.5rem;
 }
 .-right-1 {
   right: -0.25rem;
@@ -1010,8 +995,8 @@ select {
 .-top-1 {
   top: -0.25rem;
 }
-.-top-2 {
-  top: -0.5rem;
+.top-0 {
+  top: 0px;
 }
 .z-0 {
   z-index: 0;
@@ -1024,6 +1009,9 @@ select {
 }
 .col-span-3 {
   grid-column: span 3 / span 3;
+}
+.col-auto {
+  grid-column: auto;
 }
 .m-5 {
   margin: 1.25rem;
@@ -1126,9 +1114,6 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
-.mb-12 {
-  margin-bottom: 3rem;
-}
 .block {
   display: block;
 }
@@ -1176,9 +1161,6 @@ select {
 }
 .h-11 {
   height: 2.75rem;
-}
-.h-3 {
-  height: 0.75rem;
 }
 .min-h-screen {
   min-height: 100vh;
@@ -1233,9 +1215,6 @@ select {
 }
 .w-11 {
   width: 2.75rem;
-}
-.w-3 {
-  width: 0.75rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1448,17 +1427,13 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(243 244 246 / var(--tw-border-opacity));
 }
-.border-gray-400 {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity));
-}
-.border-purple-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(168 85 247 / var(--tw-border-opacity));
-}
 .border-purple-800 {
   --tw-border-opacity: 1;
   border-color: rgb(107 33 168 / var(--tw-border-opacity));
+}
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -1508,13 +1483,13 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
-.bg-purple-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
-}
 .bg-purple-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
+}
+.bg-purple-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(147 51 234 / var(--tw-bg-opacity));
 }
 .bg-opacity-25 {
   --tw-bg-opacity: 0.25;
@@ -1540,12 +1515,6 @@ select {
 }
 .p-3 {
   padding: 0.75rem;
-}
-.p-5 {
-  padding: 1.25rem;
-}
-.p-1 {
-  padding: 0.25rem;
 }
 .px-4 {
   padding-left: 1rem;

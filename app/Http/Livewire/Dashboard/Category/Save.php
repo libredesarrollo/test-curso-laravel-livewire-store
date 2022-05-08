@@ -24,8 +24,6 @@ class Save extends Component
 
     public function mount($id = null)
     {
-        
-
         if ($id != null) {
             $this->category = Category::findOrFail($id);
             $this->title = $this->category->title;
@@ -41,7 +39,6 @@ class Save extends Component
 
     public function submit()
     {
-
         $this->validate();
 
         if ($this->category)
